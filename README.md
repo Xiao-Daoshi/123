@@ -259,7 +259,7 @@
                 card.classList.add('card-appear');
                 
                 // 等待一小段时间，模拟窗口顺序弹出
-                await this.sleep(60);
+                await this.sleep(100);
             }
             
             // 爱心全部出现后等待3秒 (与原代码一致)
