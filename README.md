@@ -1,8 +1,9 @@
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>透明背景 · 爱心悬浮祝福</title>
+   <title>透明背景 · 爱心悬浮祝福</title>
     <style>
         /* 彻底透明背景：body及所有父级透明，无任何底色 */
         * {
@@ -118,9 +119,13 @@
                 visibility: hidden;
             }
         }
+
+
     </style>
 </head>
 <body>
+
+
 <script>
     // ========== 预设显示内容与背景色 (保留原版暖色风格) ==========
     const textOptions = [
@@ -215,7 +220,7 @@
             const centerX = this.screenWidth / 2;
             const centerY = this.screenHeight / 2;
             const heartSize = 18;        // 爱心缩放系数
-            const numWindows = 81;        // 爱心点数 (与原来一致)
+            const numWindows = 64;        // 爱心点数 (与原来一致)
             
             const positions = getHeartPoints(centerX, centerY, heartSize, numWindows);
             
