@@ -1,9 +1,8 @@
-<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-   <title>透明背景 · 爱心悬浮祝福</title>
+    <title>透明背景 · 爱心悬浮祝福</title>
     <style>
         /* 彻底透明背景：body及所有父级透明，无任何底色 */
         * {
@@ -27,7 +26,6 @@
         body {
             /* 再次强制透明，并且允许穿透点击？不，卡片需要交互，但body背景无任何视觉元素 */
             background: transparent;
-            /* 如果下方需要蒙层效果，这里绝对无背景 */
         }
 
         /* 模拟窗口卡片样式 —— 带柔和阴影、圆角，完全继承透明背景层 */
@@ -59,8 +57,6 @@
             font-family: '微软雅黑', 'Segoe UI', 'PingFang SC', Roboto, 'Helvetica Neue', sans-serif;
             line-height: 1.35;
             letter-spacing: 0.3px;
-            /* 背景色将由js动态赋予，但卡片本身半透？不，保留纯色柔和背景，这样卡片可见且透明背景是指整体网页透明，
-               卡片本身有轻微背景色才能看清文字。符合原python效果: 卡片有浅色背景，外部完全透明 */
         }
 
         /* 悬浮置顶高亮效果 (类似topmost) */
@@ -119,13 +115,14 @@
                 visibility: hidden;
             }
         }
-
-
+        
+        /* 确保body任何角落无背景图、无颜色 */
+        body::before, body::after {
+            display: none;
+        }
     </style>
 </head>
 <body>
-
-
 <script>
     // ========== 预设显示内容与背景色 (保留原版暖色风格) ==========
     const textOptions = [
@@ -164,8 +161,8 @@
             // 标准心形公式: x = 16 * sin(t)^3, y = 13cos(t) - 5cos(2t) - 2cos(3t) - cos(4t)
             const xStd = 10 * Math.pow(Math.sin(t), 3);
             const yStd = 5/8*(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
-            const x = centerX + xStd * size-72;
-            const y = centerY - yStd * size+36;   // 屏幕Y轴向下，减去使爱心正向
+            const x = centerX + xStd * size - 72;
+            const y = centerY - yStd * size + 36;   // 屏幕Y轴向下，减去使爱心正向
             points.push({ x: Math.round(x), y: Math.round(y) });
         }
         return points;
@@ -311,12 +308,6 @@
             for (let win of this.heartWindows) {
                 if (win && win.parentNode) win.remove();
             }
-            // 可选淡出提示
-            const tip = document.querySelector('.info-tip');
-            if (tip) {
-                tip.style.transition = 'opacity 0.3s';
-                tip.style.opacity = '0';
-            }
             // 彻底清空后不留任何额外元素，但保留完全透明背景
             this.scatteredWindows = [];
             this.heartWindows = [];
@@ -378,9 +369,6 @@
     enforceTransparentBackground();
     // 监听动态确保透明（例如某些浏览器插件干扰）
     setInterval(enforceTransparentBackground, 500);
-    
-    // 可选增加安全边界，所有卡片背景柔和，但网页整体透明完全满足题目“用css写一个透明背景”
-    // 并且 body,html 均 background: transparent, 且无任何背景图片或渐变。
 </script>
 </body>
 </html>
